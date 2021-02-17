@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 494}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -263,8 +263,8 @@ MonoBehaviour:
     y: 0
     width: 1048
     height: 346
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 122}
+  m_MaxSize: {x: 4002, y: 4022}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 19}
@@ -436,7 +436,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 1cfbffff
+      m_ExpandedIDs: 60f1ffff98f1ffff7ef2ffffa2faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -496,9 +496,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.7573428, y: -7.006091, z: 7.9769344}
+    m_Target: {x: -9.592058, y: -5.1207676, z: 0.9627539}
     speed: 2
-    m_Value: {x: 0.7573428, y: -7.006091, z: 7.9769344}
+    m_Value: {x: -9.592058, y: -5.1207676, z: 0.9627539}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -527,13 +527,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.40018147, y: 0.06480968, z: -0.028381577, w: 0.913706}
+    m_Target: {x: 0.08454094, y: 0.4480232, z: -0.04260295, w: 0.88900584}
     speed: 2
-    m_Value: {x: 0.40017956, y: 0.064809375, z: -0.02838144, w: 0.91370165}
+    m_Value: {x: 0.084540166, y: 0.4480191, z: -0.042602558, w: 0.8889977}
   m_Size:
-    m_Target: 26.433704
+    m_Target: 30.043203
     speed: 2
-    m_Value: 26.433704
+    m_Value: 30.043203
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -686,20 +686,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/World/Builder
+    - Assets/Resources/Models/Buildings
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/World/Builder
+  - Assets/Resources/Models/Buildings
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Rus-Gaming\Documents\ZOMG An Actually Good Zombie Game
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 2e2d0000
-    m_LastClickedID: 11566
-    m_ExpandedIDs: 00000000d8290000a42a0000b62a0000582b000000ca9a3b
+    m_SelectedIDs: 7c2a0000
+    m_LastClickedID: 10876
+    m_ExpandedIDs: 00000000aa2900008e2a0000f42a0000342b0000cc2b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -727,7 +727,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d8290000
+    m_ExpandedIDs: 00000000aa290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -752,8 +752,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: ae2c0000
-    m_LastClickedInstanceID: 11438
+    m_SelectedInstanceIDs: d42c0000
+    m_LastClickedInstanceID: 11476
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300002cd8ffff00560000
     m_RenameOverlay:

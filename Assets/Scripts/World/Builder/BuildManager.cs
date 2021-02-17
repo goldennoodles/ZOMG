@@ -70,7 +70,7 @@ public class BuildManager : MonoBehaviour
 
                 if (selectedBuilding != null)
                 {
-                    rotationDirection(selectedBuilding);
+                    rotationDirection();
                 }
 
                 getBuildingToPlace(hitPositionOffset);
@@ -115,15 +115,15 @@ public class BuildManager : MonoBehaviour
 
     }
 
-    private void rotationDirection(GameObject gameObject)
+    private void rotationDirection()
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            gameObject.transform.Rotate((Vector3.up * rotationSpeed), Space.World);
+            ghostBuilding.transform.Rotate((Vector3.up * rotationSpeed), Space.World);
         }
         else if (Input.GetKey(KeyCode.E))
         {
-            gameObject.transform.Rotate((Vector3.down * rotationSpeed), Space.World);
+            ghostBuilding.transform.Rotate((Vector3.down * rotationSpeed), Space.World);
         }
     }
 
