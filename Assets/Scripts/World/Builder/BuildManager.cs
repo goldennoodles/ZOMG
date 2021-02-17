@@ -40,10 +40,12 @@ public class BuildManager : MonoBehaviour
     }
     private float yOffset = 0.53f;
     private float rotationSpeed = 1f;
-    public GameObject toPlace; GameObject toGhost;
+    public GameObject selectedBuilding;
+    public GameObject ghostBuilding;
     private Ray mousePosition; RaycastHit hit;
-    private Building toBuild;
-    private Hashtable buildings = new Hashtable();
+    private List<Building> building = new List<Building>();
+    private ResourceLoader resourceLoader = new ResourceLoader();
+    private BuildingType buildingType;
 
     // Update is called once per frame
     void Update()
@@ -54,8 +56,7 @@ public class BuildManager : MonoBehaviour
         IsObjectSelectedForBuilding = true;
 
         if (
-            isBuildingEnabled && isObjectSelectedForBuilding && 
-            !buildings.ContainsValue(hit.point)
+            isBuildingEnabled && isObjectSelectedForBuilding
         )
         {
             if (Physics.Raycast(mousePosition, out hit, Mathf.Infinity, layerMask))
@@ -67,20 +68,21 @@ public class BuildManager : MonoBehaviour
                     hit.point.z
                 );
 
-                Building building = new Building(
-                    toPlace, BuildingType.WOODEN_BARRICADE
-                );
+                if (selectedBuilding != null)
+                {
+                    rotationDirection(selectedBuilding);
+                }
 
-                toGhost = building.getGhostItem;
-                toGhost.transform.position = hitPositionOffset;
+                getBuildingToPlace(hitPositionOffset);
 
-                rotationDirection(toGhost);
+                ghostBuilding.GetComponent<MeshFilter>().mesh = selectedBuilding.GetComponent<MeshFilter>().sharedMesh;
+                ghostBuilding.transform.position = hitPositionOffset;
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (!building.isObjectAlreadyPresent())
+                    if (!isObjectAlreadyPresent())
                     {
-                        placeGhostItem(building, toGhost.transform);
+                        placeGhostItem(ghostBuilding.transform);
                         Debug.Log("Placing Block On Vector : " + hitPositionOffset);
                     }
                     else
@@ -93,9 +95,28 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    private void getBuildingToPlace(Vector3 pos)
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            buildingType = BuildingType.WOODEN_BARRICADE;
+            selectedBuilding = resourceLoader.GetBuilding(BuildingType.WOODEN_BARRICADE);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            buildingType = BuildingType.STONE_BARRICADE;
+            selectedBuilding = resourceLoader.GetBuilding(BuildingType.STONE_BARRICADE);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            buildingType = BuildingType.STEEL_BARRICADE;
+            selectedBuilding = resourceLoader.GetBuilding(BuildingType.STEEL_BARRICADE);
+        }
+
+    }
+
     private void rotationDirection(GameObject gameObject)
     {
-
         if (Input.GetKey(KeyCode.Q))
         {
             gameObject.transform.Rotate((Vector3.up * rotationSpeed), Space.World);
@@ -106,13 +127,28 @@ public class BuildManager : MonoBehaviour
         }
     }
 
-    private void placeGhostItem(Building building, Transform position)
+    private void placeGhostItem(Transform position)
     {
-        GameObject builtObject = Instantiate(building.getGhostItem, position.position, position.rotation);
-        building.BuildingPosition = position;
-        buildings.Add(builtObject, hit.point);
+        GameObject builtObject = Instantiate(selectedBuilding, position.position, position.rotation);
+        building.Add(new Building(selectedBuilding, buildingType));
+
     }
 
+    public bool isObjectAlreadyPresent()
+    {
+        Collider[] hitColliders = Physics.OverlapBox(
+            ghostBuilding.transform.position,
+            ghostBuilding.transform.localScale / 2,
+            Quaternion.identity
+            );
+
+        if (hitColliders.Length > 1)
+        {
+            return true;
+        }
+
+        return false;
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
