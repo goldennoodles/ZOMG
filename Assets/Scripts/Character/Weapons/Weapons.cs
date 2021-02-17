@@ -30,15 +30,15 @@ public class Weapons : MonoBehaviour
         Weapon wp = new Weapon(pistol, WeaponType.PISTOL);
         wp.UnlockWeapon(pistol, WeaponType.PISTOL);
 
-        try
-        {
-            test.GetComponent<MeshFilter>().mesh = wp.getAWeapon(WeaponType.PISTOL).GetComponent<MeshFilter>().mesh;
-            test.GetComponent<MeshFilter>().mesh = wp.getAWeapon(WeaponType.RIFLE).GetComponent<MeshFilter>().mesh;
-        }
-        catch (NullReferenceException ex)
-        {
-            //Do Nothing Mate.
-        }
+        // try
+        // {
+        //     test.GetComponent<MeshFilter>().mesh = wp.getAWeapon(WeaponType.PISTOL).GetComponent<MeshFilter>().mesh;
+        //     test.GetComponent<MeshFilter>().mesh = wp.getAWeapon(WeaponType.RIFLE).GetComponent<MeshFilter>().mesh;
+        // }
+        // catch (NullReferenceException ex)
+        // {
+        //     //Do Nothing Mate.
+        // }
     }
 
 

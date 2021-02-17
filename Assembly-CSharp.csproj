@@ -57,6 +57,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Character\Weapons\Weapon.cs" />
      <Compile Include="Assets\Scripts\Character\Weapons\Weapons.cs" />
+     <Compile Include="Assets\Scripts\Util\ResourceLoader.cs" />
      <Compile Include="Assets\Scripts\World\Builder\Building.cs" />
      <Compile Include="Assets\Scripts\World\Builder\BuildManager.cs" />
  <Reference Include="Unity.Timeline.Editor">

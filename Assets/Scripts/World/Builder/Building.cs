@@ -14,14 +14,6 @@ public class Building
     private GameObject gameObject;
     private BuildingType buildingType;
     private Transform buildingPosition;
-    public Transform BuildingPosition {
-        get {
-            return buildingPosition;
-        }
-        set {
-            buildingPosition = value;
-        }
-    }
 
     public Building(GameObject gameObject, BuildingType buildigType){
         this.gameObject = gameObject;
@@ -34,21 +26,7 @@ public class Building
         this.buildingPosition = buildingPosition;
     }
 
-    public bool isObjectAlreadyPresent () {
-        Collider[] hitColliders = Physics.OverlapBox(
-            gameObject.transform.position, 
-            gameObject.transform.localScale / 2,
-            Quaternion.identity
-            );
-
-        if(hitColliders.Length > 1){
-            return true;
-        }
-
-        return false;
-    }
-
-    public GameObject getGhostItem {
+    public GameObject GetGameObject {
         get {
             return gameObject;
         }
