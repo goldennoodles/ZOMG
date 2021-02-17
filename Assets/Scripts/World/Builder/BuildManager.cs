@@ -30,18 +30,18 @@ public class BuildManager : MonoBehaviour
         }
     }
 
-    private int layerMask {
-        get {
+    private int layerMask
+    {
+        get
+        {
             int mask = 1 << 8;
             return mask = ~mask;
         }
     }
-
-    public GameObject toPlace;
-    private GameObject toGhost;
-    private Ray mousePosition;
-    private RaycastHit hit;
-    private float yOffset = 0.6f;
+    private float yOffset = 0.53f;
+    private float rotationSpeed = 1f;
+    public GameObject toPlace; GameObject toGhost;
+    private Ray mousePosition; RaycastHit hit;
     private Building toBuild;
     private Hashtable buildings = new Hashtable();
 
@@ -53,7 +53,10 @@ public class BuildManager : MonoBehaviour
         IsBuildingEnabled = true;
         IsObjectSelectedForBuilding = true;
 
-        if (isBuildingEnabled && isObjectSelectedForBuilding)
+        if (
+            isBuildingEnabled && isObjectSelectedForBuilding && 
+            !buildings.ContainsValue(hit.point)
+        )
         {
             if (Physics.Raycast(mousePosition, out hit, Mathf.Infinity, layerMask))
             {
@@ -64,37 +67,56 @@ public class BuildManager : MonoBehaviour
                     hit.point.z
                 );
 
-                Building building = new Building (
+                Building building = new Building(
                     toPlace, BuildingType.WOODEN_BARRICADE
                 );
 
-                if (Input.GetMouseButtonDown(0) && !buildings.ContainsValue(hit.point))
+                toGhost = building.getGhostItem;
+                toGhost.transform.position = hitPositionOffset;
+
+                rotationDirection(toGhost);
+
+                if (Input.GetMouseButtonDown(0))
                 {
-                    if(!building.isObjectAlreadyPresent()){
-                        placeGhostItem(building, hitPositionOffset);
+                    if (!building.isObjectAlreadyPresent())
+                    {
+                        placeGhostItem(building, toGhost.transform);
                         Debug.Log("Placing Block On Vector : " + hitPositionOffset);
-                    } else {
+                    }
+                    else
+                    {
                         Debug.Log("Collision is detected..");
                     }
                 }
-
-                toGhost = building.getGhostItem;
-                toGhost.transform.position = hitPositionOffset;
 
             }
         }
     }
 
-    private void placeGhostItem(Building building, Vector3 position)
+    private void rotationDirection(GameObject gameObject)
     {
-        GameObject builtObject = Instantiate(building.getGhostItem, position, Quaternion.identity);
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            gameObject.transform.Rotate((Vector3.up * rotationSpeed), Space.World);
+        }
+        else if (Input.GetKey(KeyCode.E))
+        {
+            gameObject.transform.Rotate((Vector3.down * rotationSpeed), Space.World);
+        }
+    }
+
+    private void placeGhostItem(Building building, Transform position)
+    {
+        GameObject builtObject = Instantiate(building.getGhostItem, position.position, position.rotation);
         building.BuildingPosition = position;
         buildings.Add(builtObject, hit.point);
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.red;
         Gizmos.DrawLine(mousePosition.origin, hit.point);
+
     }
 }

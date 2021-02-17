@@ -13,8 +13,8 @@ public class Building
 {
     private GameObject gameObject;
     private BuildingType buildingType;
-    private Vector3 buildingPosition;
-    public Vector3 BuildingPosition {
+    private Transform buildingPosition;
+    public Transform BuildingPosition {
         get {
             return buildingPosition;
         }
@@ -28,10 +28,10 @@ public class Building
         this.buildingType = buildigType;
     }
 
-    public Building(GameObject gameObject, BuildingType buildigType, Vector3 position){
+    public Building(GameObject gameObject, BuildingType buildigType, Transform buildingPosition){
         this.gameObject = gameObject;
         this.buildingType = buildigType;
-        this.buildingPosition = position;
+        this.buildingPosition = buildingPosition;
     }
 
     public bool isObjectAlreadyPresent () {
