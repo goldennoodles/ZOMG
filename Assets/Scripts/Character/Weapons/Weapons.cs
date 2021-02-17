@@ -27,7 +27,8 @@ public class Weapons : MonoBehaviour
 
     public void getWeapon()
     {
-        Weapon wp = new Weapon(pistol, WeaponType.PISTOL, true);
+        Weapon wp = new Weapon(pistol, WeaponType.PISTOL);
+        wp.UnlockWeapon(pistol, WeaponType.PISTOL);
 
         try
         {
@@ -36,7 +37,7 @@ public class Weapons : MonoBehaviour
         }
         catch (NullReferenceException ex)
         {
-            Debug.Log("If you're seeing this it means you're tryin to hack me game... asshole.");
+            //Do Nothing Mate.
         }
     }
 

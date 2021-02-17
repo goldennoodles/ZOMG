@@ -37,14 +37,10 @@ public class Weapon
 
 
     // This constructor is used to unlock a weapon && || Add that weapon to the weaponsList;
-    public Weapon(GameObject go, WeaponType wp, bool AddToAccessableWeaponsList)
+    public Weapon(GameObject go, WeaponType wp)
     {
-        this.unlockedWeapons.Add(wp, go);
-
-        if (AddToAccessableWeaponsList)
-        {
-            this.weaponGameObjects.Add(go);
-        }
+        this.weaponGameObjects.Add(go);
+    
     }
 
     public void UnlockWeapon(GameObject go, WeaponType wp)
@@ -66,7 +62,7 @@ public class Weapon
                     {
                         currentWeapon = unlockedWp;
                         return unlockedWp;
-                    }
+                    } 
                     break;
 
                 case WeaponType.RIFLE:
@@ -96,6 +92,10 @@ public class Weapon
             }
         }
 
-        return null;
+        if(!unlockedWeapons.ContainsKey(wp)){
+            Debug.Log("Weapon is still locked noob");
+        }
+
+        return currentWeapon;
     }
 }
