@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\Character\Character.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Character\Management\ResourceManagement.cs" />
+    <Compile Include="Assets\Scripts\Character\PowerUps.cs" />
     <Compile Include="Assets\Scripts\Character\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\Util\ResourceLoader.cs" />
     <Compile Include="Assets\Scripts\World\Builder\Building.cs" />

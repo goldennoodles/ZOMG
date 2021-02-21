@@ -13,7 +13,6 @@ public enum WeaponType
 
 public class Weapon
 {
-    
     private readonly ResourceLoader _resourceLoader = new ResourceLoader();
 
     private WeaponType _currentWeaponType;
@@ -58,7 +57,7 @@ public class Weapon
     {
         // Unlocks The Starter Weapon So We can get it
         UnlockWeapon(WeaponType.PISTOL, _resourceLoader.GetWeapon(WeaponType.PISTOL));
-        
+
         //Assigns the _currentWeapon as the StarterWeapon WeaponType.Pistol
         _currentWeapon = GetAWeapon(WeaponType.PISTOL);
     }
@@ -81,7 +80,7 @@ public class Weapon
         if (_unlockedWeapons.ContainsKey(wp))
         {
             _currentWeaponType = wp;
-            
+
             switch (wp)
             {
                 case WeaponType.PISTOL:
@@ -99,12 +98,13 @@ public class Weapon
                 case WeaponType.MINI_GUN:
                     _currentWeapon = _resourceLoader.GetWeapon(WeaponType.MINI_GUN);
                     break;
-                
+
                 default:
                     Debug.Log("Incorrect WeaponType");
                     break;
             }
-        } else if (!_unlockedWeapons.ContainsKey(wp))
+        }
+        else
         {
             Debug.Log("Weapon is still locked noob");
         }

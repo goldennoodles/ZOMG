@@ -13,6 +13,7 @@
             <e p="Management" t="Include">
               <e p="ResourceManagement.cs" t="Include" />
             </e>
+            <e p="PowerUps.cs" t="Include" />
             <e p="Weapons" t="Include">
               <e p="Weapon.cs" t="Include" />
             </e>
