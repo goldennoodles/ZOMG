@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 public class BuildManager : MonoBehaviour
 {
@@ -38,13 +39,19 @@ public class BuildManager : MonoBehaviour
             return mask = ~mask;
         }
     }
+    
     private float yOffset = 0.53f;
     private float rotationSpeed = 1f;
+    
     public GameObject selectedBuilding;
     public GameObject ghostBuilding;
+    
     private Ray mousePosition; RaycastHit hit;
+    
     private List<Building> building = new List<Building>();
+    
     private ResourceLoader resourceLoader = new ResourceLoader();
+    
     private BuildingType buildingType;
 
     // Update is called once per frame
@@ -90,7 +97,6 @@ public class BuildManager : MonoBehaviour
                         Debug.Log("Collision is detected..");
                     }
                 }
-
             }
         }
     }
@@ -149,6 +155,7 @@ public class BuildManager : MonoBehaviour
 
         return false;
     }
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

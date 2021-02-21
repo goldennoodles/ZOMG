@@ -2,29 +2,57 @@
 using System.Collections.Generic;
 
 
-public class ResourceLoader
+namespace Util
 {
-
-    private string buildingPath = "Models/Buildings/";
-
-    public GameObject GetBuilding(BuildingType buildingType)
+    public class ResourceLoader
     {
-        switch (buildingType)
+
+        private string _buildingPath = "Models/Buildings/";
+        private string _weaponsPath = "Models/Weapons/";
+
+        public GameObject GetBuilding(BuildingType buildingType)
         {
-            case BuildingType.WOODEN_BARRICADE:
-                return Resources.Load(buildingPath + "Wooden_Barricade", typeof(GameObject)) as GameObject;
+            switch (buildingType)
+            {
+                case BuildingType.WOODEN_BARRICADE:
+                    return Resources.Load(_buildingPath + "Wooden_Barricade", typeof(GameObject)) as GameObject;
 
-            case BuildingType.STONE_BARRICADE:
-                return Resources.Load(buildingPath + "Stone_Barricade", typeof(GameObject)) as GameObject;
+                case BuildingType.STONE_BARRICADE:
+                    return Resources.Load(_buildingPath + "Stone_Barricade", typeof(GameObject)) as GameObject;
 
-            case BuildingType.STEEL_BARRICADE:
-                return Resources.Load(buildingPath + "Steel_Barricade", typeof(GameObject)) as GameObject;
+                case BuildingType.STEEL_BARRICADE:
+                    return Resources.Load(_buildingPath + "Steel_Barricade", typeof(GameObject)) as GameObject;
 
-            default:
-                Debug.LogError("No Building Matched BuildingType : " + buildingType);
-                break;
+                default:
+                    Debug.LogError("No Building Matched BuildingType : " + buildingType);
+                    break;
+            }
+
+            return null;
         }
 
-        return null;
+        public GameObject GetWeapon(WeaponType weaponType)
+        {
+            switch (weaponType)
+            {
+                case WeaponType.PISTOL:
+                    return Resources.Load(_weaponsPath + "pistol", typeof(GameObject)) as GameObject;
+
+                case WeaponType.RIFLE:
+                    return Resources.Load(_weaponsPath + "rifle", typeof(GameObject)) as GameObject;
+
+                case WeaponType.SHOTGUN:
+                    return Resources.Load(_weaponsPath + "shotgun", typeof(GameObject)) as GameObject;
+
+                case WeaponType.MINI_GUN:
+                    return Resources.Load(_weaponsPath + "mini_gun", typeof(GameObject)) as GameObject;
+
+                default:
+                    Debug.LogError("No Weapons Matched WeaponType : " + weaponType);
+                    break;
+            }
+
+            return null;
+        }
     }
 }

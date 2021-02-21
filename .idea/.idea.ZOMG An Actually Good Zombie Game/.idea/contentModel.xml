@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Rus-Gaming\.Rider2018.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Rus-Gaming\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_ZOMG An Actually Good Zombie Game.1989211957.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Rus-Gaming\Documents\ZOMG An Actually Good Zombie Game" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Scripts" t="Include">
+          <e p="Character" t="Include">
+            <e p="Character.cs" t="Include" />
+            <e p="CharacterManager.cs" t="Include" />
+            <e p="Management" t="Include">
+              <e p="ResourceManagement.cs" t="Include" />
+            </e>
+            <e p="Weapons" t="Include">
+              <e p="Weapon.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Util" t="Include">
+            <e p="ResourceLoader.cs" t="Include" />
+          </e>
+          <e p="World" t="Include">
+            <e p="Builder" t="Include">
+              <e p="Building.cs" t="Include" />
+              <e p="BuildManager.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+      <e p="ZOMG An Actually Good Zombie Game.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
