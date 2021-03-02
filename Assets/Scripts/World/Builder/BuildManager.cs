@@ -2,24 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Util;
+using world;
+using static UnityEngine.Mathf;
 
 public class BuildManager : MonoBehaviour
 {
-    private bool isBuildingEnabled = false;
+    private bool _isBuildingEnabled = false;
 
     public bool IsBuildingEnabled
     {
-        get { return isBuildingEnabled; }
-        set { this.isBuildingEnabled = value; }
+        get => _isBuildingEnabled;
+        set => _isBuildingEnabled = value;
     }
 
-    private bool isObjectSelectedForBuilding = false;
+    private bool _isObjectSelectedForBuilding = false;
 
     public bool IsObjectSelectedForBuilding
     {
-        get { return isObjectSelectedForBuilding; }
-        set { this.isObjectSelectedForBuilding = value; }
+        get => _isObjectSelectedForBuilding;
+        set => _isObjectSelectedForBuilding = value;
     }
 
     private int layerMask
@@ -37,92 +40,92 @@ public class BuildManager : MonoBehaviour
     public GameObject selectedBuilding;
     public GameObject ghostBuilding;
 
-    private Ray mousePosition;
-    RaycastHit hit;
+    private Ray _mousePosition;
+    private RaycastHit _hit;
 
-    private List<Building> building = new List<Building>();
+    private List<Building> _building = new List<Building>();
+    private readonly ResourceLoader _resourceLoader = new ResourceLoader();
 
-    private ResourceLoader resourceLoader = new ResourceLoader();
-
-    private BuildingType buildingType;
-
+    private BuildingType _buildingType;
+    
     // Update is called once per frame
     void Update()
     {
-        mousePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
+        _mousePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            isBuildingEnabled = !isBuildingEnabled;
-            
-            //Once UI has been implemented this will need to redone
-            isObjectSelectedForBuilding = !isObjectSelectedForBuilding;
+            _isBuildingEnabled = !_isBuildingEnabled;
 
-            ghostBuilding.SetActive(isObjectSelectedForBuilding);
+            //Once UI has been implemented this will need to redone
+            _isObjectSelectedForBuilding = !_isObjectSelectedForBuilding;
+
+            ghostBuilding.SetActive(_isObjectSelectedForBuilding);
         }
 
         if (
-            isBuildingEnabled && isObjectSelectedForBuilding
+            _isBuildingEnabled && _isObjectSelectedForBuilding
         )
         {
-            if (Physics.Raycast(mousePosition, out hit, Mathf.Infinity, layerMask))
+            if (Physics.Raycast(_mousePosition, out _hit, Infinity, layerMask))
             {
-                Vector3 hitPositionOffset = new Vector3(
-                    hit.point.x,
-                    hit.point.y + yOffset,
-                    hit.point.z
-                );
+                Vector3 cell = _hit.transform.position;
+                Vector3 pos = new Vector3(
+                    cell.x,
+                    cell.y + 1.1f,
+                    cell.z);
 
-                if (selectedBuilding != null)
-                {
-                    RotationDirection();
-                }
+                GetBuildingToPlace(pos);
+                DoBuilding(pos);
+            }
+        }
+    }
 
-                GetBuildingToPlace(hitPositionOffset);
+    private void DoBuilding(Vector3 hitPositionOffset)
+    {
+        try
+        {
+            ghostBuilding.GetComponent<MeshFilter>().mesh =
+                selectedBuilding.GetComponent<MeshFilter>().sharedMesh;
+            ghostBuilding.transform.position = hitPositionOffset;
+        }
+        catch (UnassignedReferenceException e) { }
 
-                try
-                {
-                    ghostBuilding.GetComponent<MeshFilter>().mesh =
-                        selectedBuilding.GetComponent<MeshFilter>().sharedMesh;
-                    ghostBuilding.transform.position = hitPositionOffset;
-                }
-                catch (UnassignedReferenceException e)
-                {
-                    
-                }
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (!IsObjectAlreadyPresent())
-                    {
-                        PlaceGhostItem(ghostBuilding.transform);
-                        Debug.Log("Placing Block On Vector : " + hitPositionOffset);
-                    }
-                    else
-                    {
-                        Debug.Log("Collision is detected..");
-                    }
-                }
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!IsObjectAlreadyPresent())
+            {
+                PlaceGhostItem(ghostBuilding.transform);
+                Debug.Log("Placing Block On Vector : " + hitPositionOffset);
+            }
+            else
+            {
+                Debug.Log("Collision is detected..");
             }
         }
     }
 
     private void GetBuildingToPlace(Vector3 pos)
     {
+        if (selectedBuilding != null)
+        {
+            RotationDirection();
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            buildingType = BuildingType.WOODEN_BARRICADE;
-            selectedBuilding = resourceLoader.GetBuilding(BuildingType.WOODEN_BARRICADE);
+            _buildingType = BuildingType.WOODEN_BARRICADE;
+            selectedBuilding = _resourceLoader.GetBuilding(BuildingType.WOODEN_BARRICADE);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            buildingType = BuildingType.STONE_BARRICADE;
-            selectedBuilding = resourceLoader.GetBuilding(BuildingType.STONE_BARRICADE);
+            _buildingType = BuildingType.STONE_BARRICADE;
+            selectedBuilding = _resourceLoader.GetBuilding(BuildingType.STONE_BARRICADE);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            buildingType = BuildingType.STEEL_BARRICADE;
-            selectedBuilding = resourceLoader.GetBuilding(BuildingType.STEEL_BARRICADE);
+            _buildingType = BuildingType.STEEL_BARRICADE;
+            selectedBuilding = _resourceLoader.GetBuilding(BuildingType.STEEL_BARRICADE);
         }
     }
 
@@ -141,10 +144,11 @@ public class BuildManager : MonoBehaviour
     private void PlaceGhostItem(Transform position)
     {
         GameObject builtObject = Instantiate(selectedBuilding, position.position, position.rotation);
-        building.Add(new Building(selectedBuilding, buildingType));
+        _building.Add(new Building(selectedBuilding, _buildingType, position));
+        Debug.Log(_building.Count);
     }
 
-    public bool IsObjectAlreadyPresent()
+    private bool IsObjectAlreadyPresent()
     {
         Collider[] hitColliders = Physics.OverlapBox(
             ghostBuilding.transform.position,
@@ -156,13 +160,12 @@ public class BuildManager : MonoBehaviour
         {
             return true;
         }
-
         return false;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(mousePosition.origin, hit.point);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(_mousePosition.origin, _hit.point);
     }
 }

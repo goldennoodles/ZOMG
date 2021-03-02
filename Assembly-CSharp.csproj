@@ -5,6 +5,9 @@
     <CscToolPath>C:\Program Files\Unity\Hub\Editor\2019.1.2f1\Editor\Data\Tools\RoslynScripts</CscToolPath>
     <CscToolExe>unity_csc.bat</CscToolExe>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <_TargetFrameworkDirectories>non_empty_path_generated_by_rider_editor_plugin</_TargetFrameworkDirectories>
+    <_FullFrameworkReferenceAssemblyPaths>non_empty_path_generated_by_rider_editor_plugin</_FullFrameworkReferenceAssemblyPaths>
+    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -64,6 +67,7 @@
     <Compile Include="Assets\Scripts\Util\ResourceLoader.cs" />
     <Compile Include="Assets\Scripts\World\Builder\Building.cs" />
     <Compile Include="Assets\Scripts\World\Builder\BuildManager.cs" />
+    <Compile Include="Assets\Scripts\World\WorldGenerator.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Rus-Gaming/Documents/ZOMG An Actually Good Zombie Game/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

@@ -26,10 +26,4 @@ public class Building
         this.buildingPosition = buildingPosition;
     }
 
-    public GameObject GetGameObject {
-        get {
-            return gameObject;
-        }
-    }
-
 }
