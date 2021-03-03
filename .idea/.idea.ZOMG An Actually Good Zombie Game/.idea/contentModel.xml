@@ -18,6 +18,9 @@
               <e p="Weapon.cs" t="Include" />
             </e>
           </e>
+          <e p="UI" t="Include">
+            <e p="StartSceneButtons.cs" t="Include" />
+          </e>
           <e p="Util" t="Include">
             <e p="ResourceLoader.cs" t="Include" />
           </e>
@@ -26,7 +29,6 @@
               <e p="Building.cs" t="Include" />
               <e p="BuildManager.cs" t="Include" />
             </e>
-            <e p="Cell.cs" t="Include" />
             <e p="WorldGenerator.cs" t="Include" />
           </e>
         </e>

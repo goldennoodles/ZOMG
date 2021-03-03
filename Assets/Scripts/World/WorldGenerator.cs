@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace world
 {
     public class WorldGenerator : MonoBehaviour
     {
         
-        private const int WorldX = 20;
-        private const int WorldZ = 20;
+        [FormerlySerializedAs("WorldX")] public int worldX = 20;
+        [FormerlySerializedAs("WorldZ")] public int worldZ = 20;
 
         public GameObject floorObject;
         void Awake()
@@ -15,13 +16,13 @@ namespace world
             GameObject cellHolder = new GameObject();
                 cellHolder.name = "CellHolder";
                 
-            for (int x = -WorldX, i = 0; x < WorldX; x++, i++)
+            for (int x = -worldX, i = 0; x < worldX; x++, i++)
             {
-                for (int z = -WorldZ; z < WorldZ; z++)
+                for (int z = -worldZ; z < worldZ; z++)
                 {
                     Vector3 pos = new Vector3(
                         x: x * 1.05f,
-                        y: noiseGeneration(x, z, 2f),
+                        y: NoiseGeneration(x, z, 2f),
                         z: z * 1.05f
                     );
                     
@@ -32,7 +33,7 @@ namespace world
             }
         }
 
-        private float noiseGeneration(int x, int z, float detailScale)
+        private float NoiseGeneration(int x, int z, float detailScale)
         {
             return Mathf.PerlinNoise(x * 2, z * .5f) / detailScale;
         }

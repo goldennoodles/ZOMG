@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
-using UnityEngine.AI;
 using Util;
-using world;
 using static UnityEngine.Mathf;
 
 public class BuildManager : MonoBehaviour
 {
+    private static readonly float BUILDING_TIMER = 2f;
+    
     private bool _isBuildingEnabled = false;
 
     public bool IsBuildingEnabled
@@ -34,20 +34,21 @@ public class BuildManager : MonoBehaviour
         }
     }
 
-    private float yOffset = 0.53f;
     private float rotationSpeed = 1f;
 
     public GameObject selectedBuilding;
     public GameObject ghostBuilding;
 
+    public Material completedMaterial;
+
     private Ray _mousePosition;
     private RaycastHit _hit;
 
-    private List<Building> _building = new List<Building>();
+    private readonly List<Building> _building = new List<Building>();
     private readonly ResourceLoader _resourceLoader = new ResourceLoader();
 
     private BuildingType _buildingType;
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -56,16 +57,13 @@ public class BuildManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             _isBuildingEnabled = !_isBuildingEnabled;
-
             //Once UI has been implemented this will need to redone
             _isObjectSelectedForBuilding = !_isObjectSelectedForBuilding;
 
             ghostBuilding.SetActive(_isObjectSelectedForBuilding);
         }
 
-        if (
-            _isBuildingEnabled && _isObjectSelectedForBuilding
-        )
+        if (_isBuildingEnabled && _isObjectSelectedForBuilding)
         {
             if (Physics.Raycast(_mousePosition, out _hit, Infinity, layerMask))
             {
@@ -80,23 +78,25 @@ public class BuildManager : MonoBehaviour
             }
         }
     }
-
-    private void DoBuilding(Vector3 hitPositionOffset)
+    private void DoBuilding(Vector3 hitPositionOffset) 
     {
         try
         {
             ghostBuilding.GetComponent<MeshFilter>().mesh =
                 selectedBuilding.GetComponent<MeshFilter>().sharedMesh;
+
             ghostBuilding.transform.position = hitPositionOffset;
         }
-        catch (UnassignedReferenceException e) { }
+        catch (UnassignedReferenceException e)
+        {
+            e.ToString();
+        }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             if (!IsObjectAlreadyPresent())
             {
-                PlaceGhostItem(ghostBuilding.transform);
-                Debug.Log("Placing Block On Vector : " + hitPositionOffset);
+                StartCoroutine(PlaceGhostItem(ghostBuilding.transform));
             }
             else
             {
@@ -107,7 +107,7 @@ public class BuildManager : MonoBehaviour
 
     private void GetBuildingToPlace(Vector3 pos)
     {
-        if (selectedBuilding != null)
+        if (!selectedBuilding.Equals(null))
         {
             RotationDirection();
         }
@@ -141,11 +141,15 @@ public class BuildManager : MonoBehaviour
         }
     }
 
-    private void PlaceGhostItem(Transform position)
+    private IEnumerator PlaceGhostItem(Transform a)
     {
-        GameObject builtObject = Instantiate(selectedBuilding, position.position, position.rotation);
-        _building.Add(new Building(selectedBuilding, _buildingType, position));
-        Debug.Log(_building.Count);
+        var buildObject = Instantiate(selectedBuilding, a.position, a.rotation);
+
+        yield return new WaitForSeconds(BUILDING_TIMER);
+
+        buildObject.GetComponent<MeshRenderer>().material = completedMaterial;
+
+        _building.Add(new Building(selectedBuilding, _buildingType, a));
     }
 
     private bool IsObjectAlreadyPresent()
@@ -160,6 +164,7 @@ public class BuildManager : MonoBehaviour
         {
             return true;
         }
+
         return false;
     }
 

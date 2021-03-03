@@ -169,7 +169,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a6cfbeb28fc2a74ba8fe52a74da5c39, type: 2}
+  - {fileID: 2100000, guid: 778518d8723234749a5a47ccc728a1c9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -260,7 +260,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2f7fd7a7cdde04941b6b50acd10b0990, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -620,6 +620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedBuilding: {fileID: 0}
   ghostBuilding: {fileID: 347524735}
+  completedMaterial: {fileID: 2100000, guid: 209c2587fc1a65147a1b0267cd2192e5, type: 2}
 --- !u!4 &1113794594
 Transform:
   m_ObjectHideFlags: 0
@@ -646,6 +647,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54700a74b8526884aa88c69e85dee38a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldX: 70
+  worldZ: 70
   floorObject: {fileID: 87257484}
 --- !u!1001 &7739972763032211855
 PrefabInstance:

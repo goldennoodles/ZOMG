@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Character\Management\ResourceManagement.cs" />
     <Compile Include="Assets\Scripts\Character\PowerUps.cs" />
     <Compile Include="Assets\Scripts\Character\Weapons\Weapon.cs" />
+    <Compile Include="Assets\Scripts\UI\StartSceneButtons.cs" />
     <Compile Include="Assets\Scripts\Util\ResourceLoader.cs" />
     <Compile Include="Assets\Scripts\World\Builder\Building.cs" />
     <Compile Include="Assets\Scripts\World\Builder\BuildManager.cs" />
