@@ -1,101 +1,114 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Util;
+
+public enum WeaponType
+{
+    SHOTGUN,
+    RIFLE,
+    PISTOL,
+    MINI_GUN
+}
 
 public class Weapon
 {
-    private GameObject currentWeapon;
-    public GameObject getCurrentWeapon
+    private readonly ResourceLoader _resourceLoader = new ResourceLoader();
+
+    private WeaponType _currentWeaponType;
+
+    public WeaponType GetCurrentWeaponType
     {
-        get
-        {
-            return currentWeapon;
-        }
+        get { return _currentWeaponType; }
     }
 
-    private List<GameObject> weaponGameObjects = new List<GameObject>();
+    private GameObject _currentWeapon;
+
+    public GameObject getCurrentWeapon
+    {
+        get { return _currentWeapon; }
+    }
+
+    private List<GameObject> _weaponGameObjects = new List<GameObject>();
+
     public List<GameObject> getAllWeaponsFromList
     {
-        get
-        {
-            return weaponGameObjects;
-        }
+        get { return _weaponGameObjects; }
     }
-    private Hashtable unlockedWeapons = new Hashtable();
-    public List<GameObject> getAllUnclockedWeapons
+
+    private Hashtable _unlockedWeapons = new Hashtable();
+
+    public List<GameObject> GetAllUnlockedWeaponsObjects
     {
         get
         {
             List<GameObject> toReturn = new List<GameObject>();
-            foreach (DictionaryEntry allUnlWeap in unlockedWeapons)
+            foreach (DictionaryEntry _unlockedWeapons in _unlockedWeapons)
             {
-                toReturn.Add((GameObject)allUnlWeap.Value);
+                toReturn.Add((GameObject) _unlockedWeapons.Value);
             }
+
             return toReturn;
         }
     }
 
 
-    // This constructor is used to unlock a weapon && || Add that weapon to the weaponsList;
-    public Weapon(GameObject go, WeaponType wp, bool AddToAccessableWeaponsList)
+    public Weapon()
     {
-        this.unlockedWeapons.Add(wp, go);
+        // Unlocks The Starter Weapon So We can get it
+        UnlockWeapon(WeaponType.PISTOL, _resourceLoader.GetWeapon(WeaponType.PISTOL));
 
-        if (AddToAccessableWeaponsList)
-        {
-            this.weaponGameObjects.Add(go);
-        }
+        //Assigns the _currentWeapon as the StarterWeapon WeaponType.Pistol
+        _currentWeapon = GetAWeapon(WeaponType.PISTOL);
     }
 
-    public void UnlockWeapon(GameObject go, WeaponType wp)
+    // This constructor is used to add that weapon to the weaponsList;
+    public Weapon(GameObject go, WeaponType wp)
     {
-        this.unlockedWeapons.Add(wp, go);
+        this._weaponGameObjects.Add(go);
     }
 
-    public GameObject getAWeapon(WeaponType wp)
+    private void UnlockWeapon(WeaponType wp, GameObject go)
+    {
+        this._unlockedWeapons.Add(wp, go);
+    }
+
+    public GameObject GetAWeapon(WeaponType wp)
     {
         Debug.Log("Assigned Weapon : " + wp.ToString());
 
-        foreach (GameObject unlockedWp in weaponGameObjects)
+        if (_unlockedWeapons.ContainsKey(wp))
         {
+            _currentWeaponType = wp;
+
             switch (wp)
             {
-                default:
                 case WeaponType.PISTOL:
-                    if (unlockedWeapons.ContainsKey(wp))
-                    {
-                        currentWeapon = unlockedWp;
-                        return unlockedWp;
-                    }
+                    _currentWeapon = _resourceLoader.GetWeapon(WeaponType.PISTOL);
                     break;
 
                 case WeaponType.RIFLE:
-                    if (unlockedWeapons.ContainsKey(wp))
-                    {
-                        currentWeapon = unlockedWp;
-                        return unlockedWp;
-                    }
+                    _currentWeapon = _resourceLoader.GetWeapon(WeaponType.RIFLE);
                     break;
 
                 case WeaponType.SHOTGUN:
-                    if (unlockedWeapons.ContainsKey(wp))
-                    {
-                        currentWeapon = unlockedWp;
-                        return unlockedWp;
-                    }
+                    _currentWeapon = _resourceLoader.GetWeapon(WeaponType.SHOTGUN);
                     break;
 
                 case WeaponType.MINI_GUN:
-                    if (unlockedWeapons.ContainsKey(wp))
-                    {
-                        currentWeapon = unlockedWp;
-                        return unlockedWp;
-                    }
+                    _currentWeapon = _resourceLoader.GetWeapon(WeaponType.MINI_GUN);
                     break;
 
+                default:
+                    Debug.Log("Incorrect WeaponType");
+                    break;
             }
         }
+        else
+        {
+            Debug.Log("Weapon is still locked noob");
+        }
 
-        return null;
+        return _currentWeapon;
     }
 }
